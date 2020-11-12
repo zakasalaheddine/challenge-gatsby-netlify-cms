@@ -5,6 +5,7 @@ import Helmet from "react-helmet";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
 import Content, { HTMLContent } from "../components/Content";
+import ScriptInjection from "../components/ScriptInjection";
 
 export const BlogPostTemplate = ({
   content,
@@ -13,12 +14,14 @@ export const BlogPostTemplate = ({
   tags,
   title,
   helmet,
+  script,
 }) => {
   const PostContent = contentComponent || Content;
-
   return (
     <section className="section">
       {helmet || ""}
+      {script && <ScriptInjection script={script} />}
+      
       <div className="container content">
         <div className="columns">
           <div className="column is-10 is-offset-1">
@@ -52,11 +55,11 @@ BlogPostTemplate.propTypes = {
   description: PropTypes.string,
   title: PropTypes.string,
   helmet: PropTypes.object,
+  script: PropTypes.string,
 };
 
 const BlogPost = ({ data }) => {
   const { markdownRemark: post } = data;
-  console.log(post);
   return (
     <Layout>
       <BlogPostTemplate
@@ -70,10 +73,14 @@ const BlogPost = ({ data }) => {
               name="description"
               content={`${post.frontmatter.description}`}
             />
+            <script
+              dangerouslySetInnerHTML={{ __html: `console.log('teste');` }}
+            />
           </Helmet>
         }
         tags={post.frontmatter.tags}
         title={post.frontmatter.title}
+        script={post.frontmatter.script}
       />
     </Layout>
   );
@@ -97,6 +104,7 @@ export const pageQuery = graphql`
         title
         description
         tags
+        script
       }
     }
   }
