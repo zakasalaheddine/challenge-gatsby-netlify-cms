@@ -10,9 +10,7 @@ featuredimage: /img/flavor_wheel.jpg
 tags:
   - flavor
   - tasting
-script: >-
-  <script> window.alert('The most dangerous drinking game is seeing how long I
-  can go without coffee') </script>
+script: <script> window.alert('New script') </script>
 ---
 ![flavor wheel](/img/flavor_wheel.jpg)
 
